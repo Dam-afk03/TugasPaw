@@ -48,7 +48,7 @@ function infoDeadline(t: Tugas): { teks: string; kelas: string } {
 
 function kartu(t: Tugas): string {
   const d = infoDeadline(t);
-  const selesai = t.status === "Selesai";
+  const selesai : boolean = t.status === "Selesai";
   return `
     <li class="item ${selesai ? "selesai" : ""} p-${t.prioritas.toLowerCase()}">
       <button class="cek" data-aksi="toggle" data-id="${t.id}" aria-label="Ubah status">${selesai ? "✓" : ""}</button>
@@ -69,9 +69,9 @@ function kartu(t: Tugas): string {
 }
 
 function render(): void {
-  const total = tugas.length;
+  const total : number = tugas.length;
   const selesai = tugas.filter((t) => t.status === "Selesai").length;
-  const persen = total ? Math.round((selesai / total) * 100) : 0;
+  const persen : number = total ? Math.round((selesai / total) * 100) : 0;
 
   el("stat-total").textContent = String(total);
   el("stat-belum").textContent = String(total - selesai);
