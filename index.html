@@ -1,50 +1,150 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Tugas PAW</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #f4f6f8;
-    }
-    .container {
-      text-align: center;
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h1 { margin-bottom: 24px; color: #333; }
-    .btn-group { display: flex; gap: 16px; justify-content: center; }
-    .btn {
-      padding: 12px 24px;
-      font-size: 16px;
-      color: white;
-      background-color: #007bff;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-    .btn:hover { background-color: #0056b3; }
-    .btn-secondary { background-color: #28a745; }
-    .btn-secondary:hover { background-color: #218838; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adam Halawi - Tugas Pengembangan Aplikasi Web</title>
+  <meta name="description" content="Kumpulan tugas mata kuliah Pengembangan Aplikasi Web oleh Adam Halawi, UIN Sunan Gunung Djati Bandung." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Selamat Datang di Tugas PAW</h1>
-    <div class="btn-group">
-      <a href="./profile-adam/" class="btn">Buka Profile Diri</a>
-      <a href="./Pengelola-Tugas-kuliah/" class="btn btn-secondary">Buka To-Do Kuliah</a>
-    </div>
+  <div class="wadah">
+    <nav class="nav" aria-label="Navigasi utama">
+      <a class="merek" href="./">adamh.my.id</a>
+      <ul>
+        <li><a href="#tugas">Tugas</a></li>
+        <li><a href="profile-adam/">Profil</a></li>
+      </ul>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <h1>Halo, saya Adam.</h1>
+        <p>Di sini saya mengumpulkan tugas mata kuliah Pengembangan Aplikasi Web, satu per pertemuan, lengkap dengan aplikasi yang bisa langsung dicoba dan kode sumbernya.</p>
+        <div class="tombol-baris">
+          <a class="tombol utama" href="#tugas">Lihat tugas</a>
+          <a class="tombol garis" href="profile-adam/">Profil saya</a>
+        </div>
+      </div>
+
+      <aside class="kartu-id" aria-label="Biodata mahasiswa">
+        <div class="kartu-kepala">
+          <div class="inisial" aria-hidden="true">AH</div>
+          <div>
+            <strong>Adam Halawi</strong>
+            <span>Praktikan Pengembangan Aplikasi Web</span>
+          </div>
+        </div>
+        <dl>
+          <div><dt>NIM</dt><dd>1247050024</dd></div>
+          <div><dt>Program studi</dt><dd>Informatika</dd></div>
+          <div><dt>Semester</dt><dd>5</dd></div>
+          <div><dt>Kampus</dt><dd>UIN Sunan Gunung Djati Bandung</dd></div>
+        </dl>
+      </aside>
+    </header>
+
+    <main class="tugas" id="tugas">
+      <h2>Tugas per pertemuan</h2>
+      <p class="petunjuk" id="petunjuk"></p>
+      <div class="peta" id="peta" role="group" aria-label="Pilih pertemuan"></div>
+      <section class="panel" id="panel" aria-live="polite" hidden></section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Adam Halawi. Tugas Pengembangan Aplikasi Web.</p>
+    </footer>
   </div>
+
+  <script>
+    // Tambah tugas baru cukup dengan menambah satu objek di array ini
+    const TOTAL_PERTEMUAN = 16;
+    const tugas = [
+      {
+        no: 1,
+        judul: "Halaman Utama Kumpulan Tugas",
+        deskripsi: "Halaman ini, tempat semua tugas Pengembangan Aplikasi Web saya dikumpulkan.",
+        teknologi: ["HTML", "CSS", "JavaScript"],
+        aktif: true
+      },
+      {
+        no: 2,
+        judul: "Membuat Web Profil",
+        deskripsi: "Halaman profil pribadi yang memperkenalkan diri, latar belakang, dan minat saya di bidang informatika.",
+        teknologi: ["HTML", "CSS"],
+        tombol: "Buka profil",
+        demo: "profile-adam/",
+        repo: "https://github.com/Dam-afk03/TugasPaw/tree/main/profile-adam"
+      },
+      {
+        no: 6,
+        judul: "Pengelola Tugas Kuliah",
+        deskripsi: "Aplikasi daftar tugas kuliah dengan TypeScript dan Vite, dikerjakan dengan alur Git dan GitHub, npm, serta environment variables.",
+        teknologi: ["TypeScript", "Vite", "Git", "npm"],
+        demo: "Pengelola-Tugas-kuliah/",
+        repo: "https://github.com/Dam-afk03/Pengelola-Tugas-kuliah"
+      }
+    ];
+
+    const peta = document.getElementById("peta");
+    const panel = document.getElementById("panel");
+    const nomorTerisi = new Set(tugas.map((t) => t.no));
+    let terbuka = null;
+
+    document.getElementById("petunjuk").textContent =
+      nomorTerisi.size + " dari " + TOTAL_PERTEMUAN + " pertemuan sudah terkumpul. Klik nomor pertemuan untuk melihat tugasnya.";
+
+    function baris(t) {
+      const judul = t.aktif
+        ? t.judul
+        : '<a class="tautan-baris" href="' + t.demo + '">' + t.judul + "</a>";
+      const aksi = t.aktif
+        ? '<span class="label-aktif">Halaman ini (aktif)</span>'
+        : '<a class="tombol utama" href="' + t.demo + '">' + (t.tombol || "Buka aplikasi") + "</a>" +
+          '<a class="tombol garis" href="' + t.repo + '" target="_blank" rel="noopener">Lihat kode</a>';
+      return '<li class="baris"><div><h3>' + judul + "</h3><p>" + t.deskripsi + "</p>" +
+        '<ul class="teknologi">' + t.teknologi.map((x) => "<li>" + x + "</li>").join("") + "</ul></div>" +
+        '<div class="aksi">' + aksi + "</div></li>";
+    }
+
+    // Klik nomor untuk membuka detail, klik lagi untuk menutup
+    function tampil(i) {
+      terbuka = terbuka === i ? null : i;
+      document.querySelectorAll(".petak").forEach((b) => {
+        b.setAttribute("aria-expanded", String(Number(b.dataset.no) === terbuka));
+      });
+      if (terbuka === null) { panel.hidden = true; return; }
+      const isi = tugas.filter((t) => t.no === i);
+      panel.innerHTML =
+        '<div class="panel-kepala"><h3>Pertemuan ' + i + "</h3>" +
+        '<span class="jumlah' + (isi.length ? " ada" : "") + '">' + isi.length + " tugas</span>" +
+        '<button type="button" class="tutup" id="tutup">Tutup</button></div>' +
+        (isi.length
+          ? '<ol class="daftar">' + isi.map(baris).join("") + "</ol>"
+          : '<p class="kosong">Belum ada tugas atau materi untuk pertemuan ini.</p>');
+      panel.hidden = false;
+      document.getElementById("tutup").addEventListener("click", () => tampil(i));
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    for (let i = 1; i <= TOTAL_PERTEMUAN; i++) {
+      const petak = document.createElement("button");
+      petak.type = "button";
+      petak.className = "petak" + (nomorTerisi.has(i) ? " isi" : "");
+      petak.dataset.no = i;
+      petak.textContent = i;
+      petak.title = "Pertemuan " + i;
+      petak.setAttribute("aria-expanded", "false");
+      petak.addEventListener("click", () => tampil(i));
+      peta.appendChild(petak);
+    }
+
+    // Tautan langsung, misalnya adamh.my.id/#pertemuan-6
+    const cocok = location.hash.match(/^#pertemuan-(\d+)$/);
+    if (cocok) tampil(Number(cocok[1]));
+  </script>
 </body>
 </html>
