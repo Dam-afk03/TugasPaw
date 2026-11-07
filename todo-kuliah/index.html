@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pengelola Tugas Kuliah</title>
+  </head>
+  <body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <h1 id="judul-app"></h1>
+        <p>Kelola tugas kuliahmu supaya tidak ada yang terlewat</p>
+      </div>
+      <span class="versi" id="versi-app"></span>
+    </header>
+
+    <section class="stats">
+      <div class="stat"><span id="stat-total">0</span><small>Total</small></div>
+      <div class="stat"><span id="stat-belum">0</span><small>Belum Selesai</small></div>
+      <div class="stat"><span id="stat-selesai">0</span><small>Selesai</small></div>
+    </section>
+
+    <div class="progress"><div id="progress-bar"></div></div>
+    <p class="progress-teks" id="progress-teks"></p>
+
+    <form id="form-tugas" class="card">
+      <h2 id="judul-form">Tambah Tugas</h2>
+      <div class="grid">
+        <input type="text" id="judul" placeholder="Judul tugas" required class="penuh" />
+        <input type="text" id="matkul" placeholder="Mata kuliah" required />
+        <input type="date" id="deadline" required />
+        <select id="prioritas" required>
+          <option value="" disabled selected >Pilih prioritas</option>
+          <option>Rendah</option>
+          <option>Sedang</option>
+          <option>Tinggi</option>
+        </select>
+      </div>
+      <div class="tombol">
+        <button type="submit" id="btn-simpan" class="utama">Tambah</button>
+        <button type="button" id="btn-batal" class="sekunder" hidden>Batal</button>
+      </div>
+    </form>
+
+    <div class="toolbar">
+      <div class="tabs" id="tabs">
+        <button class="tab aktif" data-filter="semua">Semua</button>
+        <button class="tab" data-filter="Belum Selesai">Belum Selesai</button>
+        <button class="tab" data-filter="Selesai">Selesai</button>
+      </div>
+      <input type="search" id="cari" placeholder="Cari tugas atau mata kuliah..." />
+    </div>
+
+    <ul id="daftar"></ul>
+
+  <section class="card penjelasan">
+  <h2>Penjelasan Konsep &amp; Teknologi</h2>
+  <p class="intro">Ringkasan teknologi yang dipakai pada aplikasi ini.</p>
+
+  <details open>
+    <summary>Git dan GitHub</summary>
+    <ul>
+      <li><b>Git:</b> sistem version control untuk mencatat riwayat perubahan kode (commit).</li>
+      <li><b>Branch:</b> cabang kerja terpisah untuk mengembangkan fitur tanpa mengganggu branch utama.</li>
+      <li><b>Merge:</b> menggabungkan riwayat commit dari satu branch ke branch lain.</li>
+      <li><b>Merge Conflict:</b> terjadi saat dua branch mengubah baris yang sama, sehingga harus dipilih dan diselesaikan manual.</li>
+      <li><b>Pull Request:</b> permintaan di GitHub untuk meninjau dan menggabungkan branch ke <code>main</code>.</li>
+      <li><b>Push dan Pull:</b> push mengirim commit lokal ke GitHub, pull mengambil perubahan dari GitHub.</li>
+      <li><b>.gitignore:</b> daftar file yang tidak ikut dilacak, misalnya <code>node_modules</code> dan <code>.env</code>.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>npm (Node Package Manager)</summary>
+    <ul>
+      <li>Mengelola paket (library) yang dipakai proyek lewat <code>npm install</code>.</li>
+      <li><b>package.json:</b> menyimpan nama proyek, daftar paket, dan <i>scripts</i> (<code>dev</code>, <code>build</code>, <code>preview</code>).</li>
+      <li><b>dependencies:</b> paket yang dibutuhkan aplikasi saat berjalan.</li>
+      <li><b>devDependencies:</b> paket untuk pengembangan saja, seperti Vite dan TypeScript.</li>
+      <li><b>Semantic versioning:</b> <code>MAJOR.MINOR.PATCH</code>. Tanda <code>^</code> boleh update minor/patch, <code>~</code> hanya patch.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>TypeScript</summary>
+    <ul>
+      <li>JavaScript dengan sistem tipe, sehingga kesalahan terdeteksi sebelum aplikasi dijalankan.</li>
+      <li>Dipakai di aplikasi ini: tipe primitif (<code>string</code>, <code>number</code>, <code>boolean</code>), array, <code>interface Tugas</code>, <i>type alias</i> dan <i>union type</i> (<code>Status</code>, <code>Prioritas</code>, <code>Filter</code>), serta <i>generics</i> (<code>simpan&lt;T&gt;</code>, <code>muat&lt;T&gt;</code>).</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Vite, Compiler, Transpiler &amp; Bundler</summary>
+    <ul>
+      <li><b>Compiler:</b> menerjemahkan kode sumber ke bentuk lain yang bisa dijalankan atau diperiksa. <code>tsc</code> memeriksa tipe TypeScript.</li>
+      <li><b>Transpiler:</b> mengubah kode ke bahasa/versi lain yang levelnya setara, misalnya TypeScript ke JavaScript. Pada Vite tugas ini dikerjakan esbuild.</li>
+      <li><b>Bundler:</b> menggabungkan banyak modul dan aset menjadi sedikit file yang dioptimalkan (minify). Vite memakai Rollup saat <code>npm run build</code>.</li>
+      <li><b>Vite:</b> saat development menyajikan modul ES langsung sehingga sangat cepat (hot reload), dan saat build menghasilkan folder <code>dist</code> yang siap di-deploy.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Environment Variables</summary>
+    <ul>
+      <li>Konfigurasi aplikasi disimpan di file <code>.env</code> dan dibaca lewat <code>import.meta.env</code>.</li>
+      <li>Variabel harus berawalan <code>VITE_</code> agar terbaca, dan nilainya akan terlihat di browser. Karena itu hanya untuk data non-rahasia seperti nama dan versi aplikasi.</li>
+      <li><code>.env</code> tidak diunggah ke GitHub (ada di <code>.gitignore</code>), sedangkan <code>.env.example</code> diunggah sebagai contoh.</li>
+    </ul>
+  </details>
+</section>
+
+  </main>
+  <div class="modal" id="modal-hapus" hidden>
+  <div class="modal-kotak" role="dialog" aria-modal="true" aria-labelledby="modal-judul">
+    <div class="modal-ikon">🗑</div>
+    <h3 id="modal-judul">Hapus tugas?</h3>
+    <p id="modal-teks"></p>
+    <div class="modal-tombol">
+      <button type="button" class="sekunder" id="modal-batal">Batal</button>
+      <button type="button" class="hapus-ya" id="modal-ya">Ya, hapus</button>
+    </div>
+  </div>
+</div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
