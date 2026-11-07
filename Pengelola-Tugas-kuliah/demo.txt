@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Versi dari branch A
+=======
+Versi dari branch B
+>>>>>>> feature/conflict-b
