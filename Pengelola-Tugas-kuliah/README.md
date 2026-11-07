@@ -10,9 +10,9 @@ Aplikasi web sederhana untuk mengelola daftar tugas kuliah, dibuat menggunakan *
 
 | Keterangan | Link |
 |---|---|
-| Aplikasi online | https://dam-afk03.github.io/todo-kuliah/ |
-| Website pribadi | (isi dengan link website pribadi) |
-| Repository | https://github.com/Dam-afk03/todo-kuliah |
+| Aplikasi online | https://adamh.my.id/Pengelola-Tugas-kuliah/ |
+| Website pribadi | https://adamh.my.id/ |
+| Repository | https://github.com/Dam-afk03/Pengelola-Tugas-Kuliah |
 
 ## Fitur
 
