@@ -152,8 +152,29 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .meta { color: var(--redup); font-size: .88rem; }
 .harga { font-size: 1.3rem; font-weight: 800; }
 .detail { background: var(--bg); border-radius: 10px; padding: .7rem .8rem; font-size: .88rem; color: var(--redup); }
-.aksi { display: flex; gap: .5rem; margin-top: auto; padding-top: .5rem; }
-.aksi .btn { flex: 1; padding: .55rem .4rem; font-size: .85rem; }
+/* Desktop: Baris 1 (Detail | Terjual | 🗑), Baris 2 (+ Keranjang penuh 1 baris) */
+.aksi {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.45rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.aksi .btn {
+  padding: 0.55rem 0.4rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.aksi .btn-keranjang {
+  grid-column: 1 / -1;
+}
+
+.aksi .ikon-btn {
+  width: 38px;
+  height: 100%;
+}
 .kosong { grid-column: 1 / -1; text-align: center; color: var(--redup); background: #fff; border: 1px dashed var(--garis); border-radius: 16px; padding: 2.5rem 1rem; }
 
 .badge { font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: rgba(255, 255, 255, .9); color: var(--teks); }
