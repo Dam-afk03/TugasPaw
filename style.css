@@ -23,7 +23,7 @@
       }
     }
 
-    /* Reset dasar */
+    
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -37,14 +37,12 @@
 
     .wadah { max-width: 1040px; margin: 0 auto; padding: 0 1.25rem; }
 
-    /* Navigasi atas */
     .nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 0; }
     .merek { font-family: var(--font-judul); font-weight: 800; text-decoration: none; font-size: 1.1rem; }
     .nav ul { list-style: none; display: flex; gap: 1.4rem; }
     .nav a { text-decoration: none; color: var(--redup); font-weight: 500; }
     .nav a:hover { color: var(--tinta); }
 
-    /* Bagian pembuka */
     .hero {
       display: grid;
       grid-template-columns: 1.15fr .85fr;
@@ -72,7 +70,6 @@
     .tombol.utama { background: var(--aksen); border-color: var(--aksen); color: var(--aksen-teks); }
     .tombol.garis:hover { background: var(--sorot); }
 
-    /* Kartu identitas mahasiswa */
     .kartu-id {
       background: var(--permukaan);
       border: 2px solid var(--tinta);
@@ -104,7 +101,6 @@
     .kartu-id dt { color: var(--redup); }
     .kartu-id dd { font-weight: 600; text-align: right; }
 
-    /* Daftar pertemuan: pilih nomor, detail muncul saat diklik */
     .tugas { padding: 1rem 0 4rem; }
     .tugas h2 { font-family: var(--font-judul); font-size: 2rem; letter-spacing: -0.02em; }
     .petunjuk { color: var(--redup); margin: .4rem 0 1.3rem; }
@@ -124,7 +120,6 @@
     .petak:hover { border-color: var(--tinta); }
     .petak[aria-expanded="true"] { border-color: var(--tinta); outline: 3px solid var(--tinta); outline-offset: 2px; }
 
-    /* Panel detail pertemuan */
     .panel { margin-top: 1.6rem; border: 2px solid var(--tinta); border-radius: 14px; background: var(--permukaan); overflow: hidden; }
     .panel[hidden] { display: none; }
     .panel-kepala { display: flex; align-items: center; gap: .8rem; padding: 1rem 1.3rem; border-bottom: 2px solid var(--tinta); background: var(--sorot); }
@@ -149,7 +144,6 @@
     .baris h3 { font-family: var(--font-judul); font-size: 1.2rem; }
     .baris p { color: var(--redup); max-width: 60ch; margin: .3rem 0 .6rem; }
 
-    /* Seluruh baris bisa diklik lewat tautan pada judul */
     .tautan-baris { text-decoration: none; }
     .tautan-baris::after { content: ""; position: absolute; inset: 0; }
 
@@ -160,10 +154,8 @@
     .aksi .tombol { padding: .55rem 1rem; font-size: .92rem; text-align: center; }
     .label-aktif { background: var(--sorot); border: 1.5px solid var(--aksen); padding: .5rem 1rem; border-radius: 10px; font-weight: 600; font-size: .92rem; text-align: center; }
 
-    /* Penutup */
     footer { border-top: 1px solid var(--garis); padding: 1.6rem 0 2.4rem; color: var(--redup); font-size: .92rem; }
 
-    /* Layar HP */
     @media (max-width: 760px) {
       .hero { grid-template-columns: 1fr; gap: 2.4rem; padding-top: 2rem; }
       .kartu-id { transform: none; }
