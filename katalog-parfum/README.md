@@ -107,13 +107,13 @@ katalog-parfum/
 
 ## Tampilan Aplikasi
 **Bedanda**
-![Beranda](.assets/Beranda.png)
+![Beranda](..assets/Beranda.png)
 
 **Detail Produk**
-![Detail produk](.assets/detail.png)
+![Detail produk](..assets/detail.png)
 
 **Fitur Interaktif**
-![Fitur interaktif](.assets/interaktif.png)
+![Fitur interaktif](..assets/interaktif.png)
 
 ## Menjalankan
 
