@@ -1,75 +1,119 @@
-# React + TypeScript + Vite
+# Katalog Parfum & Skincare
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Nama: Adam Halawi
+- NIM: 1247050024
+- Kelas: A
+- Mata kuliah: Pengembangan Aplikasi Web, Pertemuan 8
+- Website: https://adamh.my.id/katalog-parfum/dist/
+- Repository: https://github.com/Dam-afk03/TugasPaw/tree/main/katalog-parfum
 
-Currently, two official plugins are available:
+Katalog parfum dan perawatan kulit ini menampilkan produk DummyJSON dalam bahasa Indonesia. Pengguna bisa mencari dan menyaring produk berdasarkan kategori, mengurutkan hasil, membuka halaman detail, menyimpan produk ke wishlist, dan menulis catatan request parfum. Harga ditampilkan sebagai estimasi rupiah, bukan harga resmi ritel.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Teknologi
 
-## React Compiler
+- React dan TypeScript
+- React Router (`HashRouter`)
+- Vite
+- CSS Custom Properties (Responsive Grid & Mobile Bottom Navigation)
+- ESLint
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Fitur
 
-## Expanding the ESLint configuration
+- Beranda menampilkan pengantar etalase dan empat produk pilihan dari katalog parfum dan skincare.
+- Katalog menyediakan pencarian real-time, filter kategori (`Parfum`, `Skincare`, `Kosmetik`), serta pengurutan berdasarkan harga terendah, harga tertinggi, rating tertinggi, dan nama A–Z.
+- Katalog membagi hasil enam produk per halaman menggunakan komponen `Pagination`.
+- Halaman detail menampilkan gambar utama, pilihan thumbnail galeri, merek, kategori, status stok, diskon, ulasan pembeli, estimasi harga rupiah, dan tombol simpan wishlist.
+- Wishlist produk dan catatan request parfum tersimpan di `localStorage` dan dapat ditambah atau dihapus.
+- Formulir catatan request menggunakan *controlled components* dengan validasi kolom wajib, batas minimal karakter, dan validasi nominal budget.
+- Setiap halaman yang mengambil data API memiliki kondisi memuat (`loading`), pesan gagal dengan tombol muat ulang (`error`), dan keadaan kosong (`empty`).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Routing
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+`HashRouter` di `src/App.tsx` membungkus seluruh aplikasi di dalam `StoreProvider`. Rute induk memakai komponen `MainLayout` dengan `<Outlet />`, sehingga navbar atas, bottom navigation mobile, dan footer tetap tampil di semua halaman.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+| Rute | Halaman | Isi |
+| --- | --- | --- |
+| `/` | `HomePage` | Etalase utama dan empat produk pilihan |
+| `/katalog` | `CatalogPage` | Pencarian, filter kategori, urutan, dan pagination |
+| `/katalog/:id` | `DetailPage` | Detail satu produk berdasarkan parameter `id` pada URL |
+| `/wishlist` | `WishlistPage` | Formulir catatan request parfum dan daftar produk tersimpan |
+| `*` | `NotFoundPage` | Halaman fallback saat rute tidak dikenal |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+`CatalogPage` memakai `useSearchParams` untuk menyimpan parameter pencarian (`q`), kategori (`category`), urutan (`sort`), dan nomor halaman (`page`) di URL. Penggunaan `HashRouter` dan `base: './'` di `vite.config.ts` membuat aplikasi tetap berjalan normal saat dimuat ulang dari folder statis GitHub Pages.
 
-```
+## State management
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Wishlist produk dan daftar catatan merupakan data global. `StoreProvider` di `src/context/StoreContext.tsx` menyimpan `wishlist` dan `notes` lewat `useLocalStorage` dengan kunci `parfumery_wishlist` dan `parfumery_notes`. Komponen yang membutuhkan data tersebut memanggil `useStore()` untuk memakai `toggleWishlist`, `isWishlisted`, `addNote`, dan `deleteNote`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+State lokal tetap berada di komponen masing-masing. `CatalogPage` menyimpan nilai input pencarian sementara (`searchInput`). `DetailPage` menyimpan URL gambar galeri yang sedang dipilih (`selectedImg`). `WishlistPage` menyimpan nilai input formulir (`form`), pesan validasi (`errors`), dan notifikasi berhasil (`successMsg`).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Filter katalog disimpan langsung sebagai URL state. `useSearchParams` mengelola parameter `q`, `category`, `sort`, dan `page` di alamat URL, sementara `useDebounce` menunda pembaruan kata kunci pencarian selama 350 ms agar penyaringan tidak berjalan pada setiap ketikan tombol.
 
-```
+## API
+
+`src/services/productApi.ts` memakai `fetch` dengan endpoint dasar `https://dummyjson.com/products`.
+
+`fetchAllStoreProducts()` mengambil data produk dari tiga kategori, yaitu `fragrances`, `skin-care`, dan `beauty` secara paralel menggunakan `Promise.all`, lalu menggabungkannya menjadi satu daftar produk. `fetchProductById(id)` mengambil detail satu produk berdasarkan ID.
+
+`formatRupiah()` mengalikan harga USD dari API dengan kurs estimasi `15500` dan membulatkannya ke ribuan terdekat, lalu memformatnya ke mata uang `IDR` (`Rp`).
+
+## Custom hooks
+
+| Hook | Fungsi |
+| --- | --- |
+| `useDebounce` | Menunda pembaruan nilai input pencarian selama jeda tertentu (350 ms) |
+| `useLocalStorage` | Membaca dan menyimpan state ke `localStorage` browser secara otomatis |
+
+## Struktur folder
+
+```text
+katalog-parfum/
+├── docs/
+│   ├── home.png
+│   ├── detail.png
+│   └── interaktif.png
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── Badge.tsx
+│   │   ├── Button.tsx
+│   │   ├── InputField.tsx
+│   │   ├── MainLayout.tsx
+│   │   ├── Pagination.tsx
+│   │   ├── ProductCard.tsx
+│   │   └── StateMessage.tsx
+│   ├── context/
+│   │   └── StoreContext.tsx
+│   ├── hooks/
+│   │   ├── useDebounce.ts
+│   │   └── useLocalStorage.ts
+│   ├── pages/
+│   │   ├── CatalogPage.tsx
+│   │   ├── DetailPage.tsx
+│   │   ├── HomePage.tsx
+│   │   ├── NotFoundPage.tsx
+│   │   └── WishlistPage.tsx
+│   ├── services/
+│   │   └── productApi.ts
+│   ├── types/
+│   │   └── product.ts
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── index.html
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+
+## Tampilan Aplikasi
+**Bedanda**
+![Beranda](assets/Beranda.png)
+
+**Detail Produk**
+![Detail produk](assets/detail.png)
+
+**Fitur Interaktif**
+![Fitur interaktif](assets/interaktif.png)
+
+## Menjalankan
+
