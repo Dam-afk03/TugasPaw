@@ -105,15 +105,6 @@ katalog-parfum/
 ├── tsconfig.json
 └── vite.config.ts
 
-## Tampilan Aplikasi
-**Beranda**
-![Beranda](src/assets/Beranda.png)
-
-**Detail Produk**
-![Detail produk](src/assets/detail.png)
-
-**Fitur Interaktif**
-![Fitur interaktif](src/assets/interaktif.png)
 
 
 
