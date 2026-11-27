@@ -106,7 +106,7 @@ katalog-parfum/
 └── vite.config.ts
 
 ## Tampilan Aplikasi
-**Bedanda**
+**Beranda**
 ![Beranda](src/assets/Beranda.png)
 
 **Detail Produk**
